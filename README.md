@@ -89,8 +89,6 @@ tictactoe-bot/
 │   │   └── helpers.js   # Winner calculation
 │   ├── App.js           # Main app component
 │   ├── index.js         # Entry point
-│   └── index.css        # Global CSS (imports App.css)
-├── .eslintrc.js         # ESLint config
 ├── package.json         # Dependencies & scripts
 └── README.md            # This file
 ```
@@ -142,6 +140,3 @@ tictactoe-bot/
 
 ---
 
-## License
-
-Distributed under the MIT License.
