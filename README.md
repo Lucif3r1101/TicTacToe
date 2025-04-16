@@ -1,6 +1,6 @@
 # Tic Tac Toe vs Bot
 
-A single‑player Tic Tac Toe game built with React and Hooks. Play against a simple AI bot via a remote API. Supports symbol selection, smooth CSS animations, responsive design, dark/light theme toggle, and confetti celebration on a win.
+A single‑player Tic Tac Toe game built with React and Hooks. Play against a simple AI bot via a remote API. Supports symbol selection, smooth CSS animations, responsive design, and confetti celebration on a win.
 
 ---
 
