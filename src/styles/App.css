@@ -228,3 +228,19 @@ button:hover {
     transform: translateY(0);
   }
 }
+
+@keyframes spinTwice {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+.square.winning {
+  animation: spinTwice 1.2s ease-in-out;
+}
