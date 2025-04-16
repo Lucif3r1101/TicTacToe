@@ -31,13 +31,21 @@ const SymbolSelector = ({ onSelect }) => {
             variant="outlined"
             value={name}
             onChange={handleNameChange}
-            sx={{ mt: 2, input: { color: 'white' }, label: { color: '#ccc' } }}
+            sx={{ 
+              mt: 2, 
+              input: { color: 'white' }, 
+              label: { color: '#ccc' },
+              '& input': {
+                caretColor: isNameEntered ? 'transparent' : 'initial', // Hide caret after name is entered
+              }
+            }}
             fullWidth
+            inputProps={{ style: { cursor: 'text' } }} // Cursor set to text for name input
           />
           <Button
             variant="contained"
             onClick={handleStartGame}
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, cursor: 'pointer' }} // Pointer cursor on button
           >
             Start Game
           </Button>
@@ -87,6 +95,7 @@ const SymbolSelector = ({ onSelect }) => {
                   '&:hover': {
                     backgroundColor: '#e53e3e',
                   },
+                  cursor: 'pointer',  // Pointer cursor on symbol select button
                 }}
               >
                 X
@@ -110,6 +119,7 @@ const SymbolSelector = ({ onSelect }) => {
                   '&:hover': {
                     backgroundColor: '#3c8cd1',
                   },
+                  cursor: 'pointer', // Pointer cursor on symbol select button
                 }}
               >
                 O

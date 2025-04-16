@@ -23,15 +23,6 @@ body {
   color: #ffffff;
 }
 
-h1 {
-  font-size: 2rem;
-  color: #fff;
-  margin-bottom: 1rem;
-  font-weight: 700;
-  font-family: 'Orbitron', sans-serif;
-  animation: slideInFromTop 0.5s ease-in-out;
-}
-
 /* Board Layout */
 .board {
   display: grid;
@@ -56,12 +47,13 @@ h1 {
   justify-content: center;
   cursor: pointer;
   transition: all 0.25s ease;
-  user-select: none;
+  user-select: none;  /* Keep this only for the square elements */
   animation: fadeInMove 0.3s ease;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
   font-family: 'Orbitron', sans-serif;
 }
 
+/* Hover effect for square */
 .square:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -87,13 +79,6 @@ h1 {
   animation: fadeInMove 0.6s ease;
 }
 
-.symbol-selector h2 {
-  font-size: 1.2rem;
-  color: #fff;
-  margin-bottom: 1rem;
-  font-weight: 500;
-}
-
 /* Restart Button */
 .restart-btn {
   padding: 0.6rem 1.2rem;
@@ -113,20 +98,9 @@ h1 {
   background-color: #c60055;
 }
 
-.status {
-  font-size: 1.1rem;
-  margin-top: 1.5rem;
-  color: #fff;
-  font-weight: 500;
-  animation: fadeInMove 0.5s ease;
-}
-
-/* Confetti */
-.react-confetti {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
+/* Ensure text elements allow text selection */
+h1, h2, p, .status, .symbol-selector, .board, .symbol-selector button, input, textarea {
+  user-select: text;  /* Allow text selection for these elements */
 }
 
 /* Buttons */
