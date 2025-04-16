@@ -1,29 +1,41 @@
-import React from 'react';
-import Square from './Square';
-import { Box } from '@mui/material';
+import React, { memo } from 'react';
 
-const Board = ({ squares, onClick, winningLine }) => {
+// Optimized Square component that only re-renders when props change
+const Square = memo(({ value, onClick, isWinning }) => {
+  const squareClass = `square ${value || ''} ${isWinning ? 'winning' : ''}`;
+  
   return (
-    <Box
-      className="board"
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 100px)',
-        gap: 2,
-        justifyContent: 'center',
-        marginTop: 2,
-      }}
+    <div 
+      className={squareClass}
+      onClick={onClick}
     >
-      {squares.map((val, idx) => (
-        <Square
-          key={idx}
-          value={val}
-          onClick={() => onClick(idx)}
-          isWinning={winningLine.includes(idx)}
-        />
-      ))}
-    </Box>
+      {value}
+    </div>
+  );
+});
+
+// Board component using the optimized Square
+const Board = ({ squares, onClick, winningLine }) => {
+  // Function to render a single square
+  const renderSquare = (i) => {
+    const isWinning = winningLine.includes(i);
+    
+    return (
+      <Square 
+        key={i}
+        value={squares[i]} 
+        onClick={() => onClick(i)}
+        isWinning={isWinning}
+      />
+    );
+  };
+
+  // Create board grid
+  return (
+    <div className="board">
+      {Array(9).fill(null).map((_, i) => renderSquare(i))}
+    </div>
   );
 };
 
-export default Board;
+export default memo(Board);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Board from './components/Board';
 import SymbolSelector from './components/SymbolSelector';
 import { calculateWinner } from './utils/helpers';
@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 
 const API_URL = 'https://hiring-react-assignment.vercel.app/api/bot';
 
+// Global style to apply to all Typography components
 const noCaretTypographyStyle = {
   userSelect: 'none',
   caretColor: 'transparent',
@@ -23,29 +24,37 @@ function App() {
   const [playerName, setPlayerName] = useState('');
   const [isGameReady, setIsGameReady] = useState(false);
 
+  // Memoized getBotSymbol function
   const getBotSymbol = useCallback(() => (playerSymbol === 'X' ? 'O' : 'X'), [playerSymbol]);
 
-  const handlePlayerSelect = (symbol, name) => {
+  // Memoized handlePlayerSelect function
+  const handlePlayerSelect = useCallback((symbol, name) => {
     setPlayerSymbol(symbol);
     setPlayerName(name);
-    setIsPlayerTurn(symbol === 'X');
+    setIsPlayerTurn(symbol === 'X'); // X player always goes first
     setIsGameReady(true);
-  };
+  }, []);
 
   const makeMove = useCallback(
     (index, symbol) => {
       if (board[index] || winnerInfo) return;
-      const updated = [...board];
-      updated[index] = symbol;
-      setBoard(updated);
-      const result = calculateWinner(updated);
-      if (result) {
-        setWinnerInfo(result);
-      } else {
-        setIsPlayerTurn(symbol !== playerSymbol);
-      }
+      
+      setBoard(prevBoard => {
+        const updated = [...prevBoard];
+        updated[index] = symbol;
+        
+        // Check for winner after move
+        const result = calculateWinner(updated);
+        if (result) {
+          setWinnerInfo(result);
+        } else {
+          setIsPlayerTurn(symbol !== playerSymbol);
+        }
+        
+        return updated;
+      });
     },
-    [board, playerSymbol, winnerInfo]
+    [playerSymbol, winnerInfo]
   );
 
   useEffect(() => {
@@ -60,6 +69,7 @@ function App() {
   useEffect(() => {
     if (isPlayerTurn || winnerInfo) return;
 
+    // Bot move logic
     (async () => {
       try {
         const res = await fetch(API_URL, {
@@ -77,23 +87,30 @@ function App() {
     })();
   }, [isPlayerTurn, board, winnerInfo, getBotSymbol, makeMove]);
 
-  const handleClick = (i) => {
+  // Memoized handleClick function
+  const handleClick = useCallback((i) => {
     if (!playerSymbol || !isPlayerTurn || board[i] || winnerInfo) return;
     makeMove(i, playerSymbol);
-  };
+  }, [playerSymbol, isPlayerTurn, board, winnerInfo, makeMove]);
 
-  const resetGame = () => {
+  // Memoized resetGame function
+  const resetGame = useCallback(() => {
     setBoard(Array(9).fill(null));
     setWinnerInfo(null);
-    setIsPlayerTurn(true); 
-  };
+    setIsPlayerTurn(playerSymbol === 'X');  // Reset based on player symbol
+  }, [playerSymbol]);
 
-  const restartGame = () => {
-    resetGame();
+  // Memoized restartGame function
+  const restartGame = useCallback(() => {
+    setBoard(Array(9).fill(null));
+    setWinnerInfo(null);
     setPlayerSymbol(null);
     setIsGameReady(false);
     setPlayerName('');
-  };
+  }, []);
+
+  // Memoize winningLine to prevent unnecessary re-renders
+  const winningLine = useMemo(() => winnerInfo?.line || [], [winnerInfo]);
 
   return (
     <Container maxWidth="sm" sx={{ mt: 5 }}>
@@ -109,7 +126,7 @@ function App() {
           sx={{ 
             fontFamily: 'Quicksand', 
             color: '#fff',
-            ...noCaretTypographyStyle 
+            ...noCaretTypographyStyle
           }}
         >
           Tic Tac Toe vs Bot
@@ -127,7 +144,7 @@ function App() {
           <Board
             squares={board}
             onClick={handleClick}
-            winningLine={winnerInfo?.line || []}
+            winningLine={winningLine}
           />
           <Box textAlign="center" mt={2}>
             {winnerInfo ? (
@@ -138,7 +155,7 @@ function App() {
                   sx={{ 
                     fontFamily: 'Quicksand', 
                     color: '#fff',
-                    ...noCaretTypographyStyle 
+                    ...noCaretTypographyStyle
                   }}
                 >
                   {winnerInfo.winner === playerSymbol
@@ -155,7 +172,7 @@ function App() {
                 sx={{ 
                   fontFamily: 'Rubik', 
                   color: '#fff',
-                  ...noCaretTypographyStyle 
+                  ...noCaretTypographyStyle
                 }}
               >
                 {isPlayerTurn ? `${playerName}'s Turn` : 'Bot is thinking...'}

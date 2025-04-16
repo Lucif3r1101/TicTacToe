@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 
@@ -7,22 +7,22 @@ const noCaretTypographyStyle = {
   caretColor: 'transparent',
 };
 
-const SymbolSelector = ({ onSelect }) => {
+const SymbolSelector = memo(({ onSelect }) => {
   const [name, setName] = useState('');
   const [isNameEntered, setIsNameEntered] = useState(false);
 
-  const handleNameChange = (e) => {
+  const handleNameChange = useCallback((e) => {
     setName(e.target.value);
-  };
+  }, []);
 
-  const handleStartGame = () => {
+  const handleStartGame = useCallback(() => {
     if (!name.trim()) return alert("Please enter your name!");
     setIsNameEntered(true);
-  };
+  }, [name]);
 
-  const handleSymbolSelect = (symbol) => {
+  const handleSymbolSelect = useCallback((symbol) => {
     onSelect(symbol, name.trim());
-  };
+  }, [onSelect, name]);
 
   return (
     <Box textAlign="center" className="symbol-selector">
@@ -124,58 +124,37 @@ const SymbolSelector = ({ onSelect }) => {
             justifyContent="center"
             gap={2}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1, duration: 0.5 }}
-            >
-              <Button
-                variant="contained"
-                onClick={() => handleSymbolSelect('X')}
-                sx={{
-                  fontSize: '24px',
-                  padding: '15px 30px',
-                  margin: '10px',
-                  backgroundColor: '#ff5e5e',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: '#e53e3e',
-                  },
-                  cursor: 'pointer',
-                }}
+            {['X', 'O'].map((symbol, index) => (
+              <motion.div
+                key={symbol}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1 + (index * 0.2), duration: 0.5 }}
               >
-                X
-              </Button>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.2, duration: 0.5 }}
-            >
-              <Button
-                variant="contained"
-                onClick={() => handleSymbolSelect('O')}
-                sx={{
-                  fontSize: '24px',
-                  padding: '15px 30px',
-                  margin: '10px',
-                  backgroundColor: '#5e9cff',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: '#3c8cd1',
-                  },
-                  cursor: 'pointer',
-                }}
-              >
-                O
-              </Button>
-            </motion.div>
+                <Button
+                  variant="contained"
+                  onClick={() => handleSymbolSelect(symbol)}
+                  sx={{
+                    fontSize: '24px',
+                    padding: '15px 30px',
+                    margin: '10px',
+                    backgroundColor: symbol === 'X' ? '#ff5e5e' : '#5e9cff',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: symbol === 'X' ? '#e53e3e' : '#3c8cd1',
+                    },
+                    cursor: 'pointer',
+                  }}
+                >
+                  {symbol}
+                </Button>
+              </motion.div>
+            ))}
           </Box>
         </>
       )}
     </Box>
   );
-};
+});
 
 export default SymbolSelector;
