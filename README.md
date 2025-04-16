@@ -25,10 +25,7 @@ A single‑player Tic Tac Toe game built with React and Hooks. Play against a si
 - **Bot Opponent**: Moves fetched from a remote API (`https://hiring-react-assignment.vercel.app/api/bot`).  
 - **Responsive Design**: Adapts to desktop, tablet, and mobile screens.  
 - **CSS Animations**: Fade‑in for moves; pulsing effect for winning line.  
-- **Confetti Celebration**: Celebrates **only** when you win.  
-- **Dark/Light Theme**: Toggle between themes.  
-- **Optimized Rendering**: Only updated squares re‑render (via `React.memo`).  
-- **Eslint‑Compliant**: No warnings or errors; proper React Hook dependencies.  
+- **Confetti Celebration**: Celebrates **only** when you win.   
 - **Play Again**: Reset the board while keeping your symbol.  
 - **Restart Game**: Return to symbol selection after a win or draw.
 
