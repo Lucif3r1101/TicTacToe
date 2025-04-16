@@ -1,225 +1,230 @@
 /* Global Styles */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to bottom right, #f0f2f5, #d9e2ec);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  /* App Container */
-  .app {
-    background-color: #ffffff;
-    padding: 2rem 2.5rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    max-width: 420px;
-    width: 90%;
-  }
-  
-  h1 {
-    font-size: 2rem;
-    color: #222831;
-    margin-bottom: 1rem;
-  }
-  
-  /* Board Layout */
-  .board {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    gap: 25px;
-    justify-content: center;
-    margin: 1.5rem auto;
-  }
-  
-  /* Individual Square */
-  .square {
-    width: 100px;
-    height: 100px;
-    background-color: #f4f6f8;
-    border: 2px solid #cfd8dc;
-    border-radius: 10px;
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    user-select: none;
-    caret-color: transparent;
-    animation: fadeInMove 0.3s ease;
-  }
-  
-  .square:hover {
-    background-color: #e0e7ee;
-  }
-  
-  .square.winning {
-    background-color: #4caf50;
-    color: #ffffff;
-    border-color: #43a047;
-  }
-  
-  /* Symbol Selector */
-  .symbol-selector {
-    margin-top: 1.5rem;
-  }
-  
-  .symbol-selector h2 {
-    font-size: 1.2rem;
-    color: #444;
-    margin-bottom: 1rem;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, #f0f2f5, #d9e2ec);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 
-  /* Restart Button */
-.restart-btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: white;
-    background-color: #ff4081;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 1rem;
-  }
-  
-  .restart-btn:hover {
-    background-color: #c60055;
-  }
-  
-  .status {
-    font-size: 1.1rem;
-    margin-top: 1.5rem;
-    color: #333;
-    font-weight: 500;
-  }
-  
+/* App Container */
+.app {
+  background-color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 1s ease;
+}
 
- 
-.react-confetti {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-  }
-  
-  /* Buttons */
-  button {
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: white;
-    background-color: #1976d2;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 0.3rem;
-  }
-  
-  button:hover {
-    background-color: #0d47a1;
-  }
-  
-  .status {
-    font-size: 1.1rem;
-    margin-top: 1.5rem;
-    color: #333;
-    font-weight: 500;
-  }
+h1 {
+  font-size: 2rem;
+  color: #222831;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  animation: slideInFromTop 0.5s ease-in-out;
+}
 
-  /* Styling for the symbol selector */
+/* Board Layout */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 25px;
+  justify-content: center;
+  margin: 1.5rem auto;
+}
+
+/* Individual Square */
+.square {
+  width: 100px;
+  height: 100px;
+  background-color: #f4f6f8;
+  border: 2px solid #cfd8dc;
+  border-radius: 10px;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  caret-color: transparent;
+  animation: fadeInMove 0.3s ease;
+}
+
+.square:hover {
+  background-color: #e0e7ee;
+}
+
+.square.winning {
+  background-color: #4caf50;
+  color: #ffffff;
+  border-color: #43a047;
+  animation: highlightWinningLine 0.6s ease;
+}
+
+/* Symbol Selector */
 .symbol-selector {
-    margin-top: 1.5rem;
-  }
-  
-  .symbol-selector h2 {
-    font-size: 1.2rem;
-    color: #444;
-    margin-bottom: 1rem;
-  }
-  
-  .symbol-selector button {
-    margin-right: 10px;
-  }
-  
-  /* Mobile Responsiveness */
-  @media (max-width: 768px) {
-    .board {
-      grid-template-columns: repeat(3, 90px); 
-    }
-  
-    .square {
-      font-size: 2rem; 
-    }
-  
-    .app {
-      padding: 1.5rem; 
-    }
-  
-    h1 {
-      font-size: 1.5rem; 
-    }
-  
-    button {
-      font-size: 0.9rem; 
-      padding: 0.5rem 1rem; 
-    }
-  
-    .status {
-      font-size: 1rem; 
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .board {
-      grid-template-columns: repeat(3, 80px); 
-    }
-  
-    .square {
-      font-size: 1.8rem;
-    }
-  
-    .app {
-      padding: 1rem; 
-    }
-  
-    h1 {
-      font-size: 1.3rem; 
-    }
+  margin-top: 1.5rem;
+  animation: fadeInMove 0.6s ease;
+}
+
+.symbol-selector h2 {
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+/* Restart Button */
+.restart-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  background-color: #ff4081;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.restart-btn:hover {
+  background-color: #c60055;
+}
+
+.status {
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  color: #333;
+  font-weight: 500;
+  animation: fadeInMove 0.5s ease;
+}
+
+/* Confetti */
+.react-confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+/* Buttons */
+button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  background-color: #1976d2;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0.3rem;
+}
+
+button:hover {
+  background-color: #0d47a1;
+}
+
+/* Styling for the symbol selector */
+.symbol-selector button {
+  margin-right: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .board {
+    grid-template-columns: repeat(3, 90px);
   }
 
-  @keyframes highlightWinningLine {
-    0% {
-      transform: scale(1);
-      opacity: 0.5;
-    }
-    100% {
-      transform: scale(1.1);
-      opacity: 1;
-    }
-  }
-  
-  .square.winning {
-    animation: highlightWinningLine 0.6s ease;
+  .square {
+    font-size: 2rem;
   }
 
-  @keyframes fadeInMove {
-    0% {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
+  .app {
+    padding: 1.5rem;
   }
-  
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .status {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .board {
+    grid-template-columns: repeat(3, 80px);
+  }
+
+  .square {
+    font-size: 1.8rem;
+  }
+
+  .app {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+}
+
+@keyframes highlightWinningLine {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInMove {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -3,13 +3,15 @@ import Board from './components/Board';
 import SymbolSelector from './components/SymbolSelector';
 import { calculateWinner } from './utils/helpers';
 import Confetti from 'react-confetti';
+import { Container, Typography, Button, Box } from '@mui/material';
+import { motion } from 'framer-motion';
 
 const API_URL = 'https://hiring-react-assignment.vercel.app/api/bot';
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [playerSymbol, setPlayerSymbol] = useState(null);
-  const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+  const [isPlayerTurn, setIsPlayerTurn] = useState(true); // This will change after symbol selection
   const [winnerInfo, setWinnerInfo] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
@@ -18,6 +20,19 @@ function App() {
     () => (playerSymbol === 'X' ? 'O' : 'X'),
     [playerSymbol]
   );
+
+  // Adjusted logic for who goes first based on symbol selection
+  const handlePlayerSelect = (symbol) => {
+    setPlayerSymbol(symbol);
+
+    if (symbol === 'X') {
+      // If player selects X, they go first
+      setIsPlayerTurn(true);
+    } else {
+      // If player selects O, bot goes first
+      setIsPlayerTurn(false);
+    }
+  };
 
   const makeMove = useCallback(
     (index, symbol) => {
@@ -29,7 +44,7 @@ function App() {
       if (result) {
         setWinnerInfo(result);
       } else {
-        setIsPlayerTurn(symbol !== playerSymbol);
+        setIsPlayerTurn(symbol !== playerSymbol); // Switch turn to the other player
       }
     },
     [board, playerSymbol, winnerInfo]
@@ -67,7 +82,7 @@ function App() {
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setWinnerInfo(null);
-    setIsPlayerTurn(true);
+    setIsPlayerTurn(true); // Reset to player's turn
   };
 
   const restartGame = () => {
@@ -76,14 +91,21 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <Container maxWidth="sm" sx={{ mt: 5 }}>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Typography variant="h3" align="center" gutterBottom sx={{ fontFamily: 'Poppins' }}>
+          Tic Tac Toe vs Bot
+        </Typography>
+      </motion.div>
       {winnerInfo?.winner === playerSymbol && (
-        <Confetti width={width} height={height} />        
+        <Confetti width={width} height={height} />
       )}
-
-      <h1>Tic Tac Toe vs Bot</h1>
       {!playerSymbol ? (
-        <SymbolSelector onSelect={setPlayerSymbol} />
+        <SymbolSelector onSelect={handlePlayerSelect} />
       ) : (
         <>
           <Board
@@ -91,33 +113,43 @@ function App() {
             onClick={handleClick}
             winningLine={winnerInfo?.line || []}
           />
-          <div className="status">
+          <Box textAlign="center" mt={2}>
             {winnerInfo ? (
               <>
-                <p>
+                <Typography variant="h5" gutterBottom>
                   {winnerInfo.winner === playerSymbol
                     ? '🎉 You Win!'
                     : '🤖 Bot Wins!'}
-                </p>
-                <button onClick={resetGame}>Play Again</button>
+                </Typography>
+                <Button variant="contained" onClick={resetGame} sx={{ mt: 2 }}>
+                  Play Again
+                </Button>
               </>
             ) : board.includes(null) ? (
-              <p>{isPlayerTurn ? 'Your Turn' : 'Bot is thinking...'}</p>
+              <Typography variant="h6">
+                {isPlayerTurn ? 'Your Turn' : 'Bot is thinking...'}
+              </Typography>
             ) : (
               <>
-                <p>It’s a Draw!</p>
-                <button onClick={resetGame}>Play Again</button>
+                <Typography variant="h5" gutterBottom>
+                  It’s a Draw!
+                </Typography>
+                <Button variant="contained" onClick={resetGame} sx={{ mt: 2 }}>
+                  Play Again
+                </Button>
               </>
             )}
-          </div>
+          </Box>
           {(winnerInfo || !board.includes(null)) && (
-            <button onClick={restartGame} className="restart-btn">
-              Restart Game (Select X / O)
-            </button>
+            <Box textAlign="center" mt={2}>
+              <Button variant="outlined" onClick={restartGame}>
+                Restart Game (Select X / O)
+              </Button>
+            </Box>
           )}
         </>
       )}
-    </div>
+    </Container>
   );
 }
 

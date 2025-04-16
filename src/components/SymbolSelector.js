@@ -1,12 +1,19 @@
 import React from 'react';
+import { Box, Button, Typography } from '@mui/material';
 
 const SymbolSelector = ({ onSelect }) => {
   return (
-    <div className="symbol-selector">
-      <h2>Choose Your Symbol</h2>
-      <button onClick={() => onSelect('X')}>Play as X</button>
-      <button onClick={() => onSelect('O')}>Play as O</button>
-    </div>
+    <Box className="symbol-selector" textAlign="center">
+      <Typography variant="h6" sx={{ marginBottom: 2 }}>
+        Choose Your Symbol
+      </Typography>
+      <Button variant="outlined" onClick={() => onSelect('X')} sx={{ marginRight: 2 }}>
+        Play as X
+      </Button>
+      <Button variant="outlined" onClick={() => onSelect('O')}>
+        Play as O
+      </Button>
+    </Box>
   );
 };
 
