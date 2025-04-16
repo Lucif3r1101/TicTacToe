@@ -3,7 +3,7 @@ import Board from './components/Board';
 import SymbolSelector from './components/SymbolSelector';
 import { calculateWinner } from './utils/helpers';
 import Confetti from 'react-confetti';
-import { Container, Typography, Button, Box } from '@mui/material';
+import { Container, Typography, Button, Box, CircularProgress } from '@mui/material';
 import { motion } from 'framer-motion';
 
 const API_URL = 'https://hiring-react-assignment.vercel.app/api/bot';
@@ -11,27 +11,20 @@ const API_URL = 'https://hiring-react-assignment.vercel.app/api/bot';
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [playerSymbol, setPlayerSymbol] = useState(null);
-  const [isPlayerTurn, setIsPlayerTurn] = useState(true); // This will change after symbol selection
+  const [isPlayerTurn, setIsPlayerTurn] = useState(true);
   const [winnerInfo, setWinnerInfo] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
+  const [playerName, setPlayerName] = useState('');
+  const [isGameReady, setIsGameReady] = useState(false);
 
-  const getBotSymbol = useCallback(
-    () => (playerSymbol === 'X' ? 'O' : 'X'),
-    [playerSymbol]
-  );
+  const getBotSymbol = useCallback(() => (playerSymbol === 'X' ? 'O' : 'X'), [playerSymbol]);
 
-  // Adjusted logic for who goes first based on symbol selection
-  const handlePlayerSelect = (symbol) => {
+  const handlePlayerSelect = (symbol, name) => {
     setPlayerSymbol(symbol);
-
-    if (symbol === 'X') {
-      // If player selects X, they go first
-      setIsPlayerTurn(true);
-    } else {
-      // If player selects O, bot goes first
-      setIsPlayerTurn(false);
-    }
+    setPlayerName(name);
+    setIsPlayerTurn(symbol === 'X'); // X player always goes first
+    setIsGameReady(true);
   };
 
   const makeMove = useCallback(
@@ -44,7 +37,7 @@ function App() {
       if (result) {
         setWinnerInfo(result);
       } else {
-        setIsPlayerTurn(symbol !== playerSymbol); // Switch turn to the other player
+        setIsPlayerTurn(symbol !== playerSymbol);
       }
     },
     [board, playerSymbol, winnerInfo]
@@ -74,7 +67,7 @@ function App() {
     })();
   }, [isPlayerTurn, board, winnerInfo, getBotSymbol, makeMove]);
 
-  const handleClick = i => {
+  const handleClick = (i) => {
     if (!playerSymbol || !isPlayerTurn || board[i] || winnerInfo) return;
     makeMove(i, playerSymbol);
   };
@@ -82,12 +75,14 @@ function App() {
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setWinnerInfo(null);
-    setIsPlayerTurn(true); // Reset to player's turn
+    setIsPlayerTurn(true);
   };
 
   const restartGame = () => {
     resetGame();
     setPlayerSymbol(null);
+    setIsGameReady(false);
+    setPlayerName('');
   };
 
   return (
@@ -97,15 +92,23 @@ function App() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Typography variant="h3" align="center" gutterBottom sx={{ fontFamily: 'Poppins' }}>
+        <Typography
+          variant="h3"
+          align="center"
+          gutterBottom
+          sx={{ fontFamily: 'Quicksand', color: '#fff' }}
+        >
           Tic Tac Toe vs Bot
         </Typography>
       </motion.div>
-      {winnerInfo?.winner === playerSymbol && (
-        <Confetti width={width} height={height} />
-      )}
-      {!playerSymbol ? (
-        <SymbolSelector onSelect={handlePlayerSelect} />
+
+      {winnerInfo?.winner === playerSymbol && <Confetti width={width} height={height} />}
+
+      {!isGameReady ? (
+        <Box textAlign="center" mt={4}>
+          {/* Name Input and Symbol Selection only in SymbolSelector */}
+          <SymbolSelector onSelect={handlePlayerSelect} />
+        </Box>
       ) : (
         <>
           <Board
@@ -116,9 +119,9 @@ function App() {
           <Box textAlign="center" mt={2}>
             {winnerInfo ? (
               <>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" gutterBottom sx={{ fontFamily: 'Quicksand', color: '#fff' }}>
                   {winnerInfo.winner === playerSymbol
-                    ? '🎉 You Win!'
+                    ? `🎉 ${playerName} Wins!`
                     : '🤖 Bot Wins!'}
                 </Typography>
                 <Button variant="contained" onClick={resetGame} sx={{ mt: 2 }}>
@@ -126,12 +129,13 @@ function App() {
                 </Button>
               </>
             ) : board.includes(null) ? (
-              <Typography variant="h6">
-                {isPlayerTurn ? 'Your Turn' : 'Bot is thinking...'}
+              <Typography variant="h6" sx={{ fontFamily: 'Rubik', color: '#fff' }}>
+                {isPlayerTurn ? `${playerName}'s Turn` : 'Bot is thinking...'}
+                {!isPlayerTurn && <CircularProgress size={20} sx={{ color: '#fff', marginLeft: '10px' }} />}
               </Typography>
             ) : (
               <>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" gutterBottom sx={{ fontFamily: 'Quicksand', color: '#fff' }}>
                   It’s a Draw!
                 </Typography>
                 <Button variant="contained" onClick={resetGame} sx={{ mt: 2 }}>

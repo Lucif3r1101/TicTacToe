@@ -1,9 +1,9 @@
-/* Global Styles */
+/* Global Background */
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to bottom right, #f0f2f5, #d9e2ec);
+  font-family: 'Montserrat', 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,23 +12,23 @@ body {
 
 /* App Container */
 .app {
-  background-color: #ffffff;
-  padding: 2rem 2.5rem;
-  border-radius: 15px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 60px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 95%;
   text-align: center;
-  max-width: 420px;
-  width: 90%;
-  position: relative;
-  overflow: hidden;
-  animation: fadeIn 1s ease;
+  color: #ffffff;
 }
 
 h1 {
   font-size: 2rem;
-  color: #222831;
+  color: #fff;
   margin-bottom: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
   animation: slideInFromTop 0.5s ease-in-out;
 }
 
@@ -45,31 +45,40 @@ h1 {
 .square {
   width: 100px;
   height: 100px;
-  background-color: #f4f6f8;
-  border: 2px solid #cfd8dc;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   font-size: 2.5rem;
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.25s ease;
   user-select: none;
-  caret-color: transparent;
   animation: fadeInMove 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+  font-family: 'Orbitron', sans-serif;
 }
 
 .square:hover {
-  background-color: #e0e7ee;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.square.X {
+  color: #ff6f61;
+}
+
+.square.O {
+  color: #4dd0e1;
 }
 
 .square.winning {
-  background-color: #4caf50;
+  background-color: #81c784;
   color: #ffffff;
-  border-color: #43a047;
-  animation: highlightWinningLine 0.6s ease;
+  border-color: #66bb6a;
+  animation: spinTwice 1s ease-in-out;
 }
 
 /* Symbol Selector */
@@ -80,7 +89,7 @@ h1 {
 
 .symbol-selector h2 {
   font-size: 1.2rem;
-  color: #444;
+  color: #fff;
   margin-bottom: 1rem;
   font-weight: 500;
 }
@@ -107,7 +116,7 @@ h1 {
 .status {
   font-size: 1.1rem;
   margin-top: 1.5rem;
-  color: #333;
+  color: #fff;
   font-weight: 500;
   animation: fadeInMove 0.5s ease;
 }
@@ -189,6 +198,7 @@ button:hover {
   }
 }
 
+/* Animations */
 @keyframes highlightWinningLine {
   0% {
     transform: scale(1);
@@ -207,15 +217,6 @@ button:hover {
   }
   100% {
     transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
     opacity: 1;
   }
 }
@@ -239,8 +240,4 @@ button:hover {
   100% {
     transform: rotate(720deg);
   }
-}
-
-.square.winning {
-  animation: spinTwice 1.2s ease-in-out;
 }

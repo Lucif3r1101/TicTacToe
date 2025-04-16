@@ -15,8 +15,11 @@ const Square = React.memo(({ value, onClick, isWinning }) => {
         border: '2px solid #cfd8dc',
         borderRadius: 2,
         backgroundColor: '#f4f6f8',
-        fontSize: '2.5rem',
-        fontWeight: '600',
+        fontSize: '3rem',
+        fontWeight: 700,
+        color: value === 'X' ? '#ff6f61' : '#4dd0e1',
+        fontFamily: 'Orbitron, Poppins, sans-serif',
+
         cursor: 'pointer',
         transition: 'all 0.25s ease',
         '&:hover': {
