@@ -8,6 +8,12 @@ import { motion } from 'framer-motion';
 
 const API_URL = 'https://hiring-react-assignment.vercel.app/api/bot';
 
+// Global style to apply to all Typography components
+const noCaretTypographyStyle = {
+  userSelect: 'none',
+  caretColor: 'transparent',
+};
+
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [playerSymbol, setPlayerSymbol] = useState(null);
@@ -54,6 +60,8 @@ function App() {
 
   useEffect(() => {
     if (isPlayerTurn || winnerInfo) return;
+
+    // Bot move logic
     (async () => {
       try {
         const res = await fetch(API_URL, {
@@ -62,8 +70,12 @@ function App() {
           body: JSON.stringify(board),
         });
         const move = await res.json();
-        makeMove(move, getBotSymbol());
-      } catch {}
+        if (typeof move === 'number') {
+          makeMove(move, getBotSymbol());
+        }
+      } catch (error) {
+        console.error('Error fetching bot move:', error);
+      }
     })();
   }, [isPlayerTurn, board, winnerInfo, getBotSymbol, makeMove]);
 
@@ -75,7 +87,7 @@ function App() {
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setWinnerInfo(null);
-    setIsPlayerTurn(true);
+    setIsPlayerTurn(true);  // Ensure player starts again
   };
 
   const restartGame = () => {
@@ -96,7 +108,11 @@ function App() {
           variant="h3"
           align="center"
           gutterBottom
-          sx={{ fontFamily: 'Quicksand', color: '#fff' }}
+          sx={{ 
+            fontFamily: 'Quicksand', 
+            color: '#fff',
+            ...noCaretTypographyStyle // Apply no caret style
+          }}
         >
           Tic Tac Toe vs Bot
         </Typography>
@@ -106,7 +122,6 @@ function App() {
 
       {!isGameReady ? (
         <Box textAlign="center" mt={4}>
-          {/* Name Input and Symbol Selection only in SymbolSelector */}
           <SymbolSelector onSelect={handlePlayerSelect} />
         </Box>
       ) : (
@@ -119,7 +134,15 @@ function App() {
           <Box textAlign="center" mt={2}>
             {winnerInfo ? (
               <>
-                <Typography variant="h5" gutterBottom sx={{ fontFamily: 'Quicksand', color: '#fff' }}>
+                <Typography 
+                  variant="h5" 
+                  gutterBottom 
+                  sx={{ 
+                    fontFamily: 'Quicksand', 
+                    color: '#fff',
+                    ...noCaretTypographyStyle // Apply no caret style
+                  }}
+                >
                   {winnerInfo.winner === playerSymbol
                     ? `🎉 ${playerName} Wins!`
                     : '🤖 Bot Wins!'}
@@ -129,14 +152,29 @@ function App() {
                 </Button>
               </>
             ) : board.includes(null) ? (
-              <Typography variant="h6" sx={{ fontFamily: 'Rubik', color: '#fff' }}>
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  fontFamily: 'Rubik', 
+                  color: '#fff',
+                  ...noCaretTypographyStyle // Apply no caret style
+                }}
+              >
                 {isPlayerTurn ? `${playerName}'s Turn` : 'Bot is thinking...'}
                 {!isPlayerTurn && <CircularProgress size={20} sx={{ color: '#fff', marginLeft: '10px' }} />}
               </Typography>
             ) : (
               <>
-                <Typography variant="h5" gutterBottom sx={{ fontFamily: 'Quicksand', color: '#fff' }}>
-                  It’s a Draw!
+                <Typography 
+                  variant="h5" 
+                  gutterBottom 
+                  sx={{ 
+                    fontFamily: 'Quicksand', 
+                    color: '#fff',
+                    ...noCaretTypographyStyle // Apply no caret style
+                  }}
+                >
+                  It's a Draw!
                 </Typography>
                 <Button variant="contained" onClick={resetGame} sx={{ mt: 2 }}>
                   Play Again

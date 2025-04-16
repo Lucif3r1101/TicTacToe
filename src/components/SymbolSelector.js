@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 
+// Global style to apply to all Typography components
+const noCaretTypographyStyle = {
+  userSelect: 'none',
+  caretColor: 'transparent',
+};
+
 const SymbolSelector = ({ onSelect }) => {
   const [name, setName] = useState('');
   const [isNameEntered, setIsNameEntered] = useState(false);
@@ -23,7 +29,14 @@ const SymbolSelector = ({ onSelect }) => {
     <Box textAlign="center" className="symbol-selector">
       {!isNameEntered ? (
         <>
-          <Typography variant="h5" sx={{ fontFamily: 'Quicksand', color: 'white' }}>
+          <Typography 
+            variant="h5" 
+            sx={{ 
+              fontFamily: 'Quicksand', 
+              color: 'white',
+              ...noCaretTypographyStyle // Apply no caret style
+            }}
+          >
             Enter Your Name
           </Typography>
           <TextField
@@ -33,14 +46,17 @@ const SymbolSelector = ({ onSelect }) => {
             onChange={handleNameChange}
             sx={{ 
               mt: 2, 
-              input: { color: 'white' }, 
+              input: { color: 'white' },  // Color of text inside input
               label: { color: '#ccc' },
-              '& input': {
-                caretColor: isNameEntered ? 'transparent' : 'initial', // Hide caret after name is entered
-              }
             }}
             fullWidth
-            inputProps={{ style: { cursor: 'text' } }} // Cursor set to text for name input
+            inputProps={{
+              style: { cursor: 'text' }, // Ensure that the cursor is text when inside input
+            }}
+            // Applying caret color only here
+            InputProps={{
+              style: { caretColor: 'white' }, // Explicitly target caret color inside input
+            }}
           />
           <Button
             variant="contained"
@@ -57,7 +73,14 @@ const SymbolSelector = ({ onSelect }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Typography variant="h6" sx={{ fontFamily: 'Quicksand', color: 'white' }}>
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                fontFamily: 'Quicksand', 
+                color: 'white',
+                ...noCaretTypographyStyle // Apply no caret style
+              }}
+            >
               Welcome {name}!
             </Typography>
           </motion.div>
@@ -67,7 +90,14 @@ const SymbolSelector = ({ onSelect }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
-            <Typography variant="h6" sx={{ fontFamily: 'Quicksand', color: 'white' }}>
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                fontFamily: 'Quicksand', 
+                color: 'white',
+                ...noCaretTypographyStyle // Apply no caret style
+              }}
+            >
               Now, choose your symbol!
             </Typography>
           </motion.div>

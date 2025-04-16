@@ -8,6 +8,9 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  /* Add this to prevent text selection on the entire page by default */
+  user-select: none;
+  caret-color: transparent;
 }
 
 /* App Container */
@@ -47,7 +50,7 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: all 0.25s ease;
-  user-select: none;  /* Keep this only for the square elements */
+  user-select: none;
   animation: fadeInMove 0.3s ease;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
   font-family: 'Orbitron', sans-serif;
@@ -98,9 +101,18 @@ body {
   background-color: #c60055;
 }
 
-/* Ensure text elements allow text selection */
-h1, h2, p, .status, .symbol-selector, .board, .symbol-selector button, input, textarea {
-  user-select: text;  /* Allow text selection for these elements */
+/* Prevent caret on non-input elements (board and status texts) */
+.board, .symbol-selector, .symbol-selector button, .status, .turn, 
+h1, h2, h3, h4, h5, h6, p, button, .app, Typography {
+  user-select: none;
+  caret-color: transparent;
+}
+
+/* Specific caret styling for inputs */
+input, textarea {
+  user-select: text;
+  caret-color: white;
+  cursor: text;
 }
 
 /* Buttons */
