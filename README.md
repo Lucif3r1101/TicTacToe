@@ -15,8 +15,7 @@ A single‑player Tic Tac Toe game built with React and Hooks. Play against a si
 7. [Configuration & Customization](#configuration--customization)  
 8. [Usage](#usage)  
 9. [Dependencies & Tools](#dependencies--tools)  
-10. [Contributing](#contributing)  
-11. [License](#license)  
+10. [Contributing](#contributing)   
 
 ---
 
