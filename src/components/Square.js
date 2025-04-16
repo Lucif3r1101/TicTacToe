@@ -19,7 +19,7 @@ const Square = React.memo(({ value, onClick, isWinning }) => {
         fontWeight: 700,
         color: value === 'X' ? '#ff6f61' : '#4dd0e1',
         fontFamily: 'Orbitron, Poppins, sans-serif',
-        cursor: value ? 'not-allowed' : 'pointer', // Change cursor when square is filled
+        cursor: value ? 'not-allowed' : 'pointer', 
         transition: 'all 0.25s ease',
         '&:hover': {
           backgroundColor: '#e0e7ee',

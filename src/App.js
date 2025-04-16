@@ -8,7 +8,6 @@ import { motion } from 'framer-motion';
 
 const API_URL = 'https://hiring-react-assignment.vercel.app/api/bot';
 
-// Global style to apply to all Typography components
 const noCaretTypographyStyle = {
   userSelect: 'none',
   caretColor: 'transparent',
@@ -29,7 +28,7 @@ function App() {
   const handlePlayerSelect = (symbol, name) => {
     setPlayerSymbol(symbol);
     setPlayerName(name);
-    setIsPlayerTurn(symbol === 'X'); // X player always goes first
+    setIsPlayerTurn(symbol === 'X');
     setIsGameReady(true);
   };
 
@@ -61,7 +60,6 @@ function App() {
   useEffect(() => {
     if (isPlayerTurn || winnerInfo) return;
 
-    // Bot move logic
     (async () => {
       try {
         const res = await fetch(API_URL, {
@@ -87,7 +85,7 @@ function App() {
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setWinnerInfo(null);
-    setIsPlayerTurn(true);  // Ensure player starts again
+    setIsPlayerTurn(true); 
   };
 
   const restartGame = () => {
@@ -111,7 +109,7 @@ function App() {
           sx={{ 
             fontFamily: 'Quicksand', 
             color: '#fff',
-            ...noCaretTypographyStyle // Apply no caret style
+            ...noCaretTypographyStyle 
           }}
         >
           Tic Tac Toe vs Bot
@@ -140,7 +138,7 @@ function App() {
                   sx={{ 
                     fontFamily: 'Quicksand', 
                     color: '#fff',
-                    ...noCaretTypographyStyle // Apply no caret style
+                    ...noCaretTypographyStyle 
                   }}
                 >
                   {winnerInfo.winner === playerSymbol
@@ -157,7 +155,7 @@ function App() {
                 sx={{ 
                   fontFamily: 'Rubik', 
                   color: '#fff',
-                  ...noCaretTypographyStyle // Apply no caret style
+                  ...noCaretTypographyStyle 
                 }}
               >
                 {isPlayerTurn ? `${playerName}'s Turn` : 'Bot is thinking...'}
@@ -171,7 +169,7 @@ function App() {
                   sx={{ 
                     fontFamily: 'Quicksand', 
                     color: '#fff',
-                    ...noCaretTypographyStyle // Apply no caret style
+                    ...noCaretTypographyStyle
                   }}
                 >
                   It's a Draw!

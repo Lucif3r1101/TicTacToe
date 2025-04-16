@@ -8,7 +8,6 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  /* Add this to prevent text selection on the entire page by default */
   user-select: none;
   caret-color: transparent;
 }

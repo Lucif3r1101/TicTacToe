@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 
-// Global style to apply to all Typography components
 const noCaretTypographyStyle = {
   userSelect: 'none',
   caretColor: 'transparent',
@@ -34,7 +33,7 @@ const SymbolSelector = ({ onSelect }) => {
             sx={{ 
               fontFamily: 'Quicksand', 
               color: 'white',
-              ...noCaretTypographyStyle // Apply no caret style
+              ...noCaretTypographyStyle 
             }}
           >
             Enter Your Name
@@ -45,23 +44,40 @@ const SymbolSelector = ({ onSelect }) => {
             value={name}
             onChange={handleNameChange}
             sx={{ 
-              mt: 2, 
-              input: { color: 'white' },  // Color of text inside input
-              label: { color: '#ccc' },
+              mt: 2,
+              input: { color: 'white' },
+
+              '& .MuiInputLabel-root': {
+                color: 'black',
+                '&.Mui-focused': {
+                  color: 'black', 
+                }
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'rgba(255, 255, 255, 0.3)',
+                },
+                '&:hover fieldset': {
+                  borderColor: 'rgba(255, 255, 255, 0.5)',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'rgba(255, 255, 255, 0.7)',
+                },
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              }
             }}
             fullWidth
             inputProps={{
-              style: { cursor: 'text' }, // Ensure that the cursor is text when inside input
+              style: { cursor: 'text' },
             }}
-            // Applying caret color only here
             InputProps={{
-              style: { caretColor: 'white' }, // Explicitly target caret color inside input
+              style: { caretColor: 'white' },
             }}
           />
           <Button
             variant="contained"
             onClick={handleStartGame}
-            sx={{ mt: 2, cursor: 'pointer' }} // Pointer cursor on button
+            sx={{ mt: 2, cursor: 'pointer' }}
           >
             Start Game
           </Button>
@@ -78,7 +94,7 @@ const SymbolSelector = ({ onSelect }) => {
               sx={{ 
                 fontFamily: 'Quicksand', 
                 color: 'white',
-                ...noCaretTypographyStyle // Apply no caret style
+                ...noCaretTypographyStyle
               }}
             >
               Welcome {name}!
@@ -95,7 +111,7 @@ const SymbolSelector = ({ onSelect }) => {
               sx={{ 
                 fontFamily: 'Quicksand', 
                 color: 'white',
-                ...noCaretTypographyStyle // Apply no caret style
+                ...noCaretTypographyStyle
               }}
             >
               Now, choose your symbol!
@@ -104,9 +120,9 @@ const SymbolSelector = ({ onSelect }) => {
 
           <Box
             mt={3}
-            display="flex" // Ensures buttons are side by side
-            justifyContent="center" // Centers buttons horizontally
-            gap={2} // Adds space between buttons
+            display="flex"
+            justifyContent="center"
+            gap={2}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -125,7 +141,7 @@ const SymbolSelector = ({ onSelect }) => {
                   '&:hover': {
                     backgroundColor: '#e53e3e',
                   },
-                  cursor: 'pointer',  // Pointer cursor on symbol select button
+                  cursor: 'pointer',
                 }}
               >
                 X
@@ -149,7 +165,7 @@ const SymbolSelector = ({ onSelect }) => {
                   '&:hover': {
                     backgroundColor: '#3c8cd1',
                   },
-                  cursor: 'pointer', // Pointer cursor on symbol select button
+                  cursor: 'pointer',
                 }}
               >
                 O
