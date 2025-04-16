@@ -1,70 +1,147 @@
-# Getting Started with Create React App
+# Tic Tac Toe vs Bot
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A single‑player Tic Tac Toe game built with React and Hooks. Play against a simple AI bot via a remote API. Supports symbol selection, smooth CSS animations, responsive design, dark/light theme toggle, and confetti celebration on a win.
+
+---
+
+## Table of Contents
+
+1. [Features](#features)  
+2. [Demo](#demo)  
+3. [Prerequisites](#prerequisites)  
+4. [Installation](#installation)  
+5. [Available Scripts](#available-scripts)  
+6. [Project Structure](#project-structure)  
+7. [Configuration & Customization](#configuration--customization)  
+8. [Usage](#usage)  
+9. [Dependencies & Tools](#dependencies--tools)  
+10. [Contributing](#contributing)  
+11. [License](#license)  
+
+---
+
+## Features
+
+- **Symbol Selection**: Choose to play as **X** or **O**.  
+- **Bot Opponent**: Moves fetched from a remote API (`https://hiring-react-assignment.vercel.app/api/bot`).  
+- **Responsive Design**: Adapts to desktop, tablet, and mobile screens.  
+- **CSS Animations**: Fade‑in for moves; pulsing effect for winning line.  
+- **Confetti Celebration**: Celebrates **only** when you win.  
+- **Dark/Light Theme**: Toggle between themes.  
+- **Optimized Rendering**: Only updated squares re‑render (via `React.memo`).  
+- **Eslint‑Compliant**: No warnings or errors; proper React Hook dependencies.  
+- **Play Again**: Reset the board while keeping your symbol.  
+- **Restart Game**: Return to symbol selection after a win or draw.
+
+---
+
+---
+
+## Prerequisites
+
+- **Node.js** v14 or higher  
+- **npm** v6+ (bundled with Node.js) or **Yarn** v1.22+  
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/yourusername/tictactoe-bot.git
+cd tictactoe-bot
+npm install
+# or
+yarn install
+```
+
+---
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory:
 
-### `npm start`
+| Command         | Description                             |
+| --------------- | --------------------------------------- |
+| `npm start`     | Run in development mode at localhost    |
+| `npm run build` | Build for production in the `build/`    |
+| `npm test`      | Launch test runner                      |
+| `npm run eject` | Eject CRA configuration (irreversible)  |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
+```
+tictactoe-bot/
+├── public/
+│   ├── index.html       # HTML template
+│   ├── favicon.ico      # App icon (overwritten)
+│   ├── logo.png         # Custom logo for tab and app
+│   └── manifest.json    # PWA metadata
+├── src/
+│   ├── components/
+│   │   ├── Board.js
+│   │   ├── Square.js
+│   │   └── SymbolSelector.js
+│   ├── styles/
+│   │   └── App.css
+│   ├── utils/
+│   │   └── helpers.js   # Winner calculation
+│   ├── App.js           # Main app component
+│   ├── index.js         # Entry point
+│   └── index.css        # Global CSS (imports App.css)
+├── .eslintrc.js         # ESLint config
+├── package.json         # Dependencies & scripts
+└── README.md            # This file
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Configuration & Customization
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Change App Title**: Edit `<title>` in `public/index.html`.  
+- **Change Favicon**: Overwrite `public/favicon.ico` or update `<link rel="icon">`.  
+- **PWA Icons**: Replace icons in `public/manifest.json`.  
+- **Theme Colors**: Modify CSS variables or `App.css`.  
+- **Animations**: Adjust `@keyframes` in `App.css`.  
+- **Bot API**: Update `API_URL` in `src/App.js` to point at any compatible endpoint.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
 
-### `npm run eject`
+1. **Select Symbol**: X or O.  
+2. **Play**: Click empty squares to move; bot responds automatically.  
+3. **End**:
+   - Player win → confetti + "You Win!"  
+   - Bot win → "Bot Wins!"  
+   - Draw → "It’s a Draw!"  
+4. **Next**:
+   - **Play Again** resets board, keeps symbol.  
+   - **Restart Game** returns to symbol selection.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Dependencies & Tools
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **React** v18  
+- **react-dom**  
+- **react-confetti**  
+- **eslint** & **eslint-plugin-react-hooks**  
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## Contributing
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Fork the repo  
+2. `git checkout -b feature/your-feature`  
+3. `npm install`  
+4. Make changes & commit  
+5. `git push origin feature/your-feature`  
+6. Open a Pull Request  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Distributed under the MIT License.
